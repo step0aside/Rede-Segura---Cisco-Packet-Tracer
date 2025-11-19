@@ -24,18 +24,19 @@ Os SW's foram configurados para agir como pontes entre os Hosts e o SW's de Dist
 Para configurar as portas como parte das Vlans, foi usado o seguinte comando:  
 
 _interface range fa0/1 - 5_  
-_switchport mode access_    <---- Configuração aplicada em todas VLans.  
+_switchport mode access_    <---- _Configuração aplicada em todas VLans_.  
 
 Como ambos os Switches possuem 24 portas FastEthernet, para redução da superficie de ataques, foram desligadas todas as portas remanescentes que não estão em uso: (Exemplo SW1).  
 
 <img width="629" height="409" alt="shutdown interfaces" src="https://github.com/user-attachments/assets/620eb26f-852f-443e-b1bc-e4d2f00e6824" />  
 
 # Switches de Distribuição.  
-Sendo eles Switches multilayer, nas interfaces GigabitEthernet do SW's de Acesso foram inseridos os seguintes comandos:  
+Sendo eles Switches multilayer, nas interfaces GigabitEthernet do SW's de Acesso e Roteadores foram inseridos os seguintes comandos:  
 
  _switchport mode trunk_  
- _switchport trunk allowed vlans 110,120,130,140,150_  <-- Algumas Vlans foram separadas neste processo, para comunicação com seus  
-                                                        respectivos SW's de acesso.  
+ _switchport trunk allowed vlans 110,120,130,140,150_   
+ 
+ _Algumas Vlans foram separadas neste processo, para comunicação com seus respectivos SW's de acesso_.  
 
 E também, ajustados os valores para cada Vlan, em prol da configuração de endereçamento dinâmico:  
 
@@ -54,7 +55,8 @@ Os Roteadores foram configurados sub-interfaces para as VLans:
  _ip helper-address 192.168.100.5_  
  _ip route 192.168.100.0 Serial0/1/1_  
 
-_Também foi configurado na full-mesh e nos switches, os IP's das VLANs cadastradas com o protocolo_ **RIP Routing** _para maior flexibilidade de roteamento_:
+_Também foi configurado na full-mesh e nos switches, os IP's das VLANs cadastradas com o protocolo_ **RIP Routing** _para maior flexibilidade de roteamento_:  
+
 30.30.30.10  
 30.30.30.20  
 40.40.40.10  
@@ -94,7 +96,8 @@ Foi configurado um servidor AAA para autenticação, autorização e contabilida
 Elaborei e apliquei diversos métodos de segurança, além dos que mencionei acima. Para segurança da infraestrutura, a fim de manter disponibilidade, integridade e confidencialidade.  
 
 # DHCP Snooping
-Nas interfaces de acesso, defini o DHCP trust entre as VLANS para o servidor real, evitando entrega de IP's maliciosos para os hosts da Infraestrutura como das portas conectadas de PC's ou Impressoras, segue exemplo:
+Nas interfaces de acesso, defini o DHCP trust entre as VLANS para o servidor real, evitando entrega de IP's maliciosos para os hosts da Infraestrutura como das portas conectadas de PC's ou Impressoras, segue exemplo:  
+
 <img width="389" height="73" alt="dhcp snooping" src="https://github.com/user-attachments/assets/5bfa197c-ceed-4745-986f-4109c0519a0b" />
 
 # ARP Inspection
@@ -111,8 +114,8 @@ _no ip domain-lookup_  <-- desativa a resolução DNS ao digitar um comando erra
 # Passwords no usermode e globalmode.
 E para finalizar, na infraestrutura padrão também foi definido dois tipos de passwords para os Hardenings que são;
 
-_usermode:emp.generica123_  
-_globalmode:admin.generico1234_  
+_usermode: emp.generica123_  
+_globalmode: admin.generico1234_  
 
 Como um adicional, também foi adicionado o password encrypt, para as senhas.
 
