@@ -11,11 +11,18 @@ As VLans são: Produção, RH, Financeiro e Compras. Na parte dos roteadores na 
 A base da rede consiste em 2 Switches de Acesso, 2 Switches de Distribuição garantindo o roteamento confiável e 3 roteadores ambos em prol de otimizar a rede, agindo com redundância mantendo a disponibilidade da rede.  
 
 # VLans
-**VLAN 110** (Produção) - Vlan 192.168.110.0 dedicada ao setor administrativo da Produção.  
-**VLAN 120** (RH) - Vlan 192.168.120.0 dedicada ao setor de RH.  
-**VLAN 130** (Recreativa) - Vlan 192.168.130.0  recreativa para colaboradores, isolada para melhor segurança do interior principal da rede.  
-**VLAN 140** (Financeiro) - Vlan 192.168.140.0 dedicada ao setor de Financeiro.  
-**VLAN 150** (Compras) - Vlan 192.168.150.0 dedicada ao setor de Compras.  
+
+**VLAN 100** (Servidores) 192.168.100.0 dedicada ao pátio de servidores.
+
+**VLAN 110** (Produção)  192.168.110.0 dedicada ao setor administrativo da Produção.  
+
+**VLAN 120** (RH)  192.168.120.0 dedicada ao setor de RH.  
+
+**VLAN 130** (Recreativa)  192.168.130.0  recreativa para colaboradores, isolada para melhor segurança do interior principal da rede.  
+
+**VLAN 140** (Financeiro)  192.168.140.0 dedicada ao setor de Financeiro.  
+
+**VLAN 150** (Compras)  192.168.150.0 dedicada ao setor de Compras.  
 
 # Switches de Acesso.
 Os SW's foram configurados para agir como pontes entre os Hosts e o SW's de Distribuição, foram usados dois Switches Layer 2.  
@@ -27,6 +34,7 @@ _interface range fa0/1 - 5_
 _switchport mode access_    <---- _Configuração aplicada em todas VLans_.  
 
 Como ambos os Switches possuem 24 portas FastEthernet, para redução da superficie de ataques, foram desligadas todas as portas remanescentes que não estão em uso: (Exemplo SW1).  
+
 
 <img width="629" height="409" alt="shutdown interfaces" src="https://github.com/user-attachments/assets/620eb26f-852f-443e-b1bc-e4d2f00e6824" />  
 
@@ -43,15 +51,15 @@ E também, ajustados os valores para cada Vlan, em prol da configuração de end
 **vlan 110**
 
  ip address 192.168.110.1 255.255.255.0  
- ip helper-address 192.168.100.5     <---- IP Server DHCP  
- 
+ ip helper-address 192.168.100.5     <----   IP Server DHCP  
+
 *Foi configurado em todas as Vlans, com seus respectivos endereços (também foi replicado o comando shutdown nas portas sem uso*  
 
 # Roteadores.
 Os Roteadores foram configurados sub-interfaces para as VLans:  
 
  _int gigabitethernet0/0/1.120_  
- _ip address 192.168.120.0 255.255.255.0_  
+ _ip address 192.168.120.1 255.255.255.0_  
  _ip helper-address 192.168.100.5_  
  _ip route 192.168.100.0 Serial0/1/1_  
 
@@ -111,6 +119,13 @@ _no cdp run_      <-- para de enviar/receber pacotes cdp para os hosts.
 _no lldp run_     <-- a mesma coisa que o cdp, só que para o link layer discover protocol.  
 
 _no ip domain-lookup_  <-- desativa a resolução DNS ao digitar um comando errado.  
+
+# Banner de login e password encryption.
+
+Foi aplicado um Banner de login para alerta, e em seguida o password para acesso de configurações do hardware:
+
+<img width="449" height="177" alt="banner+senha" src="https://github.com/user-attachments/assets/e83aebc9-b279-464d-a209-a6828fbeb7f5" />  
+
 
 # Passwords no usermode e globalmode.
 E para finalizar, na infraestrutura padrão também foi definido dois tipos de passwords para os Hardenings que são;
