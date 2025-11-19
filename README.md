@@ -106,7 +106,7 @@ Foi configurado também o ARP Inspection para evitar ARP Spoofing entre as VLANS
 <img width="398" height="45" alt="arp inspection" src="https://github.com/user-attachments/assets/f7ecab42-6995-4b19-8905-f64d17431316" />
 
 # CMDS para ataques comuns.
-_no cdp run_      <-- para de enviar pacotes cdp para os hots/receber.  
+_no cdp run_      <-- para de enviar/receber pacotes cdp para os hosts.  
 
 _no lldp run_     <-- a mesma coisa que o cdp, só que para o link layer discover protocol.  
 
