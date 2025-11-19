@@ -20,11 +20,11 @@ A base da rede consiste em 2 Switches de Acesso, 2 Switches de Distribuição ga
 # Switches de Acesso.
 Os SW's foram configurados para agir como pontes entre os Hosts e o SW's de Distribuição, foram usados dois Switches Layer 2.  
 
-_Configuração para ambos SW's._  
+**Configuração para ambos SW's.**  
 Para configurar as portas como parte das Vlans, foi usado o seguinte comando:  
 
-interface range fa0/1 - 5  
-switchport mode access    <---- Configuração aplicada em todas VLans.  
+_interface range fa0/1 - 5_  
+_switchport mode access_    <---- Configuração aplicada em todas VLans.  
 
 Como ambos os Switches possuem 24 portas FastEthernet, para redução da superficie de ataques, foram desligadas todas as portas remanescentes que não estão em uso: (Exemplo SW1).  
 
@@ -33,26 +33,28 @@ Como ambos os Switches possuem 24 portas FastEthernet, para redução da superfi
 # Switches de Distribuição.  
 Sendo eles Switches multilayer, nas interfaces GigabitEthernet do SW's de Acesso foram inseridos os seguintes comandos:  
 
- switchport mode trunk  
- switchport trunk allowed vlans 110,120,130,140,150  <-- Algumas Vlans foram separadas neste processo, para comunicação com seus  
+ _switchport mode trunk_  
+ _switchport trunk allowed vlans 110,120,130,140,150_  <-- Algumas Vlans foram separadas neste processo, para comunicação com seus  
                                                         respectivos SW's de acesso.  
 
 E também, ajustados os valores para cada Vlan, em prol da configuração de endereçamento dinâmico:  
 
 **vlan 110**
+
  ip address 192.168.110.1 255.255.255.0  
  ip helper-address 192.168.100.5     <---- IP Server DHCP  
+ 
 *Foi configurado em todas as Vlans, com seus respectivos endereços (também foi replicado o comando shutdown nas portas sem uso*  
 
 # Roteadores.
 Os Roteadores foram configurados sub-interfaces para as VLans:  
 
- int gigabitethernet0/0/1.120  
- ip address 192.168.120.0 255.255.255.0  
- ip helper-address 192.168.100.5  
- ip route 192.168.100.0 Serial0/1/1  
+ _int gigabitethernet0/0/1.120_  
+ _ip address 192.168.120.0 255.255.255.0_  
+ _ip helper-address 192.168.100.5_  
+ _ip route 192.168.100.0 Serial0/1/1_  
 
-_Também foi configurado na full-mesh, IP's estáticos para comunicação prática e eficiente_  
+_Também foi configurado na full-mesh e nos switches, os IP's das VLANs cadastradas com o protocolo_ **RIP Routing** _para maior flexibilidade de roteamento_:
 30.30.30.10  
 30.30.30.20  
 40.40.40.10  
@@ -75,14 +77,16 @@ _Em seguida, Host com endereço atribuido:_
 <img width="657" height="167" alt="DHCP-PC" src="https://github.com/user-attachments/assets/6beb565a-49f4-43ad-b646-45c176f2f149" />
 
 # DNS
-Foi configurado o DNS para tradução de nomes para as Hosts, também foi criado um test server que é o _www.test.com_  
+Foi configurado o DNS para tradução de nomes para as Hosts, também foi criado um test server que é o _www.test.com_:
 
 <img width="528" height="549" alt="DNS" src="https://github.com/user-attachments/assets/8ea4900d-dc74-4825-ab67-7cdef8d60926" />  
+
+Também foi testado a conectividade, usando o cmd _ping_ para checar a tradução de nomes:
 
 <img width="403" height="196" alt="ping-teste-dns" src="https://github.com/user-attachments/assets/03188fdf-4b47-457b-af70-8e0b31546b71" />
 
 # Radius
-Foi configurado um servidor AAA para autenticação, autorização e contabilidade. 
+Foi configurado um servidor AAA para autenticação, autorização e contabilidade, com duas contas genéricas criadas para servir de exemplo:
 
 <img width="503" height="615" alt="AAA" src="https://github.com/user-attachments/assets/5f44ca70-0ef3-4a41-bd0f-2eb446596ee8" />4  
 
@@ -107,9 +111,8 @@ _no ip domain-lookup_  <-- desativa a resolução DNS ao digitar um comando erra
 # Passwords no usermode e globalmode.
 E para finalizar, na infraestrutura padrão também foi definido dois tipos de passwords para os Hardenings que são;
 
-_usermode:emp.generica123  
-
-globalmode:admin.generico1234_  
+_usermode:emp.generica123_  
+_globalmode:admin.generico1234_  
 
 Como um adicional, também foi adicionado o password encrypt, para as senhas.
 
