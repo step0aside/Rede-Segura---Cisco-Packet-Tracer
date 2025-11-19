@@ -3,86 +3,91 @@ Este projeto tem como objetivo, demonstrar o funcionamento, segurança e confiab
 
 # Topologia Principal.
 <img width="1032" height="698" alt="topologia" src="https://github.com/user-attachments/assets/5e5ec0c3-df0f-4a01-b6ec-ac5c36d6ed8d" />
-O projeto foi segmentado em 6 VLans (100, 110, 120, 130, 140 e 150) alimentadas com servidores DHCP para distribuição de IP's, DNS para resolução de nomes e um servidor RADIUS agindo como AAA.
+  
+O projeto foi segmentado em 6 VLans (100, 110, 120, 130, 140 e 150) alimentadas com servidores DHCP para distribuição de IP's, DNS para resolução de nomes e um servidor RADIUS agindo como AAA.  
 
-As VLans são: Produção, RH, Financeiro e Compras. Na parte dos roteadores na Full-mesh, temos a VLan Wi-fi recreativa para funcionários, separada para preservar o interior da rede.
+As VLans são: Produção, RH, Financeiro e Compras. Na parte dos roteadores na Full-mesh, temos a VLan Wi-fi recreativa para funcionários, separada para preservar o interior da rede.  
 
-A base da rede consiste em 2 Switches de Acesso, 2 Switches de Distribuição garantindo o roteamento confiável e 3 roteadores ambos em prol de otimizar a rede, agindo com redundância mantendo a disponibilidade da rede.
+A base da rede consiste em 2 Switches de Acesso, 2 Switches de Distribuição garantindo o roteamento confiável e 3 roteadores ambos em prol de otimizar a rede, agindo com redundância mantendo a disponibilidade da rede.  
 
 # VLans
-VLAN 110 (Produção) - Vlan 192.168.110.0 dedicada ao setor administrativo da Produção.
-VLAN 120 (RH) - Vlan 192.168.120.0 dedicada ao setor de RH.
-VLAN 130 (Recreativa) - Vlan 192.168.130.0  recreativa para colaboradores, isolada para melhor segurança do interior principal da rede.
-VLAN 140 (Financeiro) - Vlan 192.168.140.0 dedicada ao setor de Financeiro.
-VLAN 150 (Compras) - Vlan 192.168.150.0 dedicada ao setor de Compras.
+**VLAN 110** (Produção) - Vlan 192.168.110.0 dedicada ao setor administrativo da Produção.  
+**VLAN 120** (RH) - Vlan 192.168.120.0 dedicada ao setor de RH.  
+**VLAN 130** (Recreativa) - Vlan 192.168.130.0  recreativa para colaboradores, isolada para melhor segurança do interior principal da rede.  
+**VLAN 140** (Financeiro) - Vlan 192.168.140.0 dedicada ao setor de Financeiro.  
+**VLAN 150** (Compras) - Vlan 192.168.150.0 dedicada ao setor de Compras.  
 
 # Switches de Acesso.
-Os SW's foram configurados para agir como pontes entre os Hosts e o SW's de Distribuição, foram usados dois Switches Layer 2.
+Os SW's foram configurados para agir como pontes entre os Hosts e o SW's de Distribuição, foram usados dois Switches Layer 2.  
 
-_Configuração para ambos SW's._
-Para configurar as portas como parte das Vlans, foi usado o seguinte comando:
-[!NOTE]
-interface range fa0/1 - 5
-switchport mode access    <---- Configuração aplicada em todas VLans.
+_Configuração para ambos SW's._  
+Para configurar as portas como parte das Vlans, foi usado o seguinte comando:  
 
-Como ambos os Switches possuem 24 portas FastEthernet, para redução da superficie de ataques, foram desligadas todas as portas remanescentes que não estão em uso: (Exemplo SW1).
-<img width="629" height="409" alt="shutdown interfaces" src="https://github.com/user-attachments/assets/620eb26f-852f-443e-b1bc-e4d2f00e6824" />
+interface range fa0/1 - 5  
+switchport mode access    <---- Configuração aplicada em todas VLans.  
 
-# Switches de Distribuição.
-Sendo eles Switches multilayer, nas interfaces GigabitEthernet do SW's de Acesso foram inseridos os seguintes comandos:
-switchport mode trunk
-switchport trunk allowed vlans 110,120,130,140,150  <-- Algumas Vlans foram separadas neste processo, para comunicação com seus 
-                                                        respectivos SW's de acesso.
+Como ambos os Switches possuem 24 portas FastEthernet, para redução da superficie de ataques, foram desligadas todas as portas remanescentes que não estão em uso: (Exemplo SW1).  
 
-E também, ajustados os valores para cada Vlan, em prol da configuração de endereçamento dinâmico:
-[!NOTE]
-vlan 110
-ip address 192.168.110.1 255.255.255.0 
-ip helper-address 192.168.100.5     <---- IP Server DHCP
-*Foi configurado em todas as Vlans, com seus respectivos endereços (também foi replicado o comando shutdown nas portas sem uso*
+<img width="629" height="409" alt="shutdown interfaces" src="https://github.com/user-attachments/assets/620eb26f-852f-443e-b1bc-e4d2f00e6824" />  
+
+# Switches de Distribuição.  
+Sendo eles Switches multilayer, nas interfaces GigabitEthernet do SW's de Acesso foram inseridos os seguintes comandos:  
+
+ switchport mode trunk  
+ switchport trunk allowed vlans 110,120,130,140,150  <-- Algumas Vlans foram separadas neste processo, para comunicação com seus  
+                                                        respectivos SW's de acesso.  
+
+E também, ajustados os valores para cada Vlan, em prol da configuração de endereçamento dinâmico:  
+
+**vlan 110**
+ ip address 192.168.110.1 255.255.255.0  
+ ip helper-address 192.168.100.5     <---- IP Server DHCP  
+*Foi configurado em todas as Vlans, com seus respectivos endereços (também foi replicado o comando shutdown nas portas sem uso*  
 
 # Roteadores.
-Os Roteadores foram configurados sub-interfaces para as VLans:
-[!NOTE]
-int gigabitethernet0/0/1.120
-ip address 192.168.120.0 255.255.255.0
-ip helper-address 192.168.100.5
-ip route 192.168.100.0 Serial0/1/1
+Os Roteadores foram configurados sub-interfaces para as VLans:  
 
-_Também foi configurado na full-mesh, IP's estáticos para comunicação prática e eficiente_
-30.30.30.10
-30.30.30.20
-40.40.40.10
-40.40.40.20
-50.50.50.10
-50.50.50.20
+ int gigabitethernet0/0/1.120  
+ ip address 192.168.120.0 255.255.255.0  
+ ip helper-address 192.168.100.5  
+ ip route 192.168.100.0 Serial0/1/1  
 
-Para permitir acesso remoto seguro ao roteador/switch via SSH (e desabilitar o Telnet inseguro)
+_Também foi configurado na full-mesh, IP's estáticos para comunicação prática e eficiente_  
+30.30.30.10  
+30.30.30.20  
+40.40.40.10  
+40.40.40.20  
+50.50.50.10  
+50.50.50.20  
+
+**Para permitir acesso remoto seguro ao roteador/switch via SSH (e desabilitar o Telnet inseguro)**  
 
 <img width="517" height="128" alt="cryptokey R1" src="https://github.com/user-attachments/assets/6d5cb326-9ab7-441b-a747-9e97d0a876e3" />
 
 
 # DHCP
-O servidor foi configurado para fornecer DHCP dinâmico para os hosts das VLans;
+O servidor foi configurado para fornecer DHCP dinâmico para os hosts das VLans;  
+
 <img width="506" height="551" alt="DHCP" src="https://github.com/user-attachments/assets/2bfe8307-db95-4087-855d-89e26682f4e6" />
 
-_Em seguida, Host com endereço atribuido:_
+_Em seguida, Host com endereço atribuido:_  
+
 <img width="657" height="167" alt="DHCP-PC" src="https://github.com/user-attachments/assets/6beb565a-49f4-43ad-b646-45c176f2f149" />
 
 # DNS
-Foi configurado o DNS para tradução de nomes para as Hosts, também foi criado um test server que é o _www.test.com_
+Foi configurado o DNS para tradução de nomes para as Hosts, também foi criado um test server que é o _www.test.com_  
 
-<img width="528" height="549" alt="DNS" src="https://github.com/user-attachments/assets/8ea4900d-dc74-4825-ab67-7cdef8d60926" />
+<img width="528" height="549" alt="DNS" src="https://github.com/user-attachments/assets/8ea4900d-dc74-4825-ab67-7cdef8d60926" />  
 
 <img width="403" height="196" alt="ping-teste-dns" src="https://github.com/user-attachments/assets/03188fdf-4b47-457b-af70-8e0b31546b71" />
 
 # Radius
 Foi configurado um servidor AAA para autenticação, autorização e contabilidade. 
 
-<img width="503" height="615" alt="AAA" src="https://github.com/user-attachments/assets/5f44ca70-0ef3-4a41-bd0f-2eb446596ee8" />4
+<img width="503" height="615" alt="AAA" src="https://github.com/user-attachments/assets/5f44ca70-0ef3-4a41-bd0f-2eb446596ee8" />4  
 
 # Práticas de Segurança aplicadas.
-Elaborei e apliquei diversos métodos de segurança, além dos que mencionei acima. Para segurança da infraestrutura, a fim de manter disponibilidade, integridade e confidencialidade.
+Elaborei e apliquei diversos métodos de segurança, além dos que mencionei acima. Para segurança da infraestrutura, a fim de manter disponibilidade, integridade e confidencialidade.  
 
 # DHCP Snooping
 Nas interfaces de acesso, defini o DHCP trust entre as VLANS para o servidor real, evitando entrega de IP's maliciosos para os hosts da Infraestrutura como das portas conectadas de PC's ou Impressoras, segue exemplo:
@@ -93,14 +98,18 @@ Foi configurado também o ARP Inspection para evitar ARP Spoofing entre as VLANS
 <img width="398" height="45" alt="arp inspection" src="https://github.com/user-attachments/assets/f7ecab42-6995-4b19-8905-f64d17431316" />
 
 # CMDS para ataques comuns.
-_no cdp run_      <-- para de enviar pacotes cdp para os hots/receber.
-_no lldp run_     <-- a mesma coisa que o cdp, só que para o link layer discover protocol.
-_no ip domain-lookup_  <-- desativa a resolução DNS ao digitar um comando errado.
+_no cdp run_      <-- para de enviar pacotes cdp para os hots/receber.  
+
+_no lldp run_     <-- a mesma coisa que o cdp, só que para o link layer discover protocol.  
+
+_no ip domain-lookup_  <-- desativa a resolução DNS ao digitar um comando errado.  
 
 # Passwords no usermode e globalmode.
 E para finalizar, na infraestrutura padrão também foi definido dois tipos de passwords para os Hardenings que são;
-_usermode:emp.generica123
-globalmode:admin.generico1234_
+
+_usermode:emp.generica123  
+
+globalmode:admin.generico1234_  
 
 Como um adicional, também foi adicionado o password encrypt, para as senhas.
 
