@@ -64,7 +64,7 @@ _Também foi configurado na full-mesh e nos switches, os IP's das VLANs cadastra
 50.50.50.10  
 50.50.50.20  
 
-**Para permitir acesso remoto seguro ao roteador/switch via SSH (e desabilitar o Telnet inseguro)**  
+**Para permitir acesso remoto seguro ao roteador/switch via SSH (e desabilitar o Telnet inseguro) foi aplicado o seguinte comando:**  
 
 <img width="517" height="128" alt="cryptokey R1" src="https://github.com/user-attachments/assets/6d5cb326-9ab7-441b-a747-9e97d0a876e3" />
 
@@ -102,6 +102,7 @@ Nas interfaces de acesso, defini o DHCP trust entre as VLANS para o servidor rea
 
 # ARP Inspection
 Foi configurado também o ARP Inspection para evitar ARP Spoofing entre as VLANS, assim evitando prévias negações de Serviço.
+
 <img width="398" height="45" alt="arp inspection" src="https://github.com/user-attachments/assets/f7ecab42-6995-4b19-8905-f64d17431316" />
 
 # CMDS para ataques comuns.
