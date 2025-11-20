@@ -8,7 +8,7 @@ O projeto foi segmentado em 6 VLans (100, 110, 120, 130, 140 e 150) alimentadas 
 
 As VLans são: Produção, RH, Financeiro e Compras. Na parte dos roteadores na Full-mesh, temos a VLan Wi-fi recreativa para funcionários, separada para preservar o interior da rede.  
 
-A base da rede consiste em 2 Switches de Acesso, 2 Switches de Distribuição garantindo o roteamento confiável e 3 roteadores ambos em prol de otimizar a rede, agindo com redundância mantendo a disponibilidade da rede.  
+A base da rede consiste em 2 Switches de Acesso, 2 Switches de Distribuição garantindo o roteamento confiável e 3 roteadores, ambos em prol de otimizar a rede, agindo com redundância assim mantendo a disponibilidade da infraestrutura.  
 
 # VLans
 
