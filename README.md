@@ -33,10 +33,12 @@ Para configurar as portas como parte das Vlans, foi usado o seguinte comando:
 _interface range fa0/1 - 5_  
 _switchport mode access_    <---- _Configuração aplicada em todas VLans_.  
 
-Como ambos os Switches possuem 24 portas FastEthernet, para redução da superficie de ataques, foram desligadas todas as portas remanescentes que não estão em uso: (Exemplo SW1).  
+Como ambos os Switches possuem 24 portas FastEthernet, para redução da superficie de ataques, foram desligadas todas as portas remanescentes que não estão em uso: (Exemplo no Switch).  
 
 
 <img width="629" height="409" alt="shutdown interfaces" src="https://github.com/user-attachments/assets/620eb26f-852f-443e-b1bc-e4d2f00e6824" />  
+
+Foi inserido o cmd _storm controll_ para evitar que a rede receba um ataque de broadcast, que no caso poderia ser fatal se as portas ainda estivessem em _no shutdown_
 
 # Switches de Distribuição.  
 Sendo eles Switches multilayer, nas interfaces GigabitEthernet do SW's de Acesso e Roteadores foram inseridos os seguintes comandos:  
@@ -72,9 +74,10 @@ _Também foi configurado na full-mesh e nos switches, os IP's das VLANs cadastra
 50.50.50.10  
 50.50.50.20  
 
-**Para permitir acesso remoto seguro ao roteador/switch via SSH (e desabilitar o Telnet inseguro) foi aplicado o seguinte comando:**  
+**Para permitir acesso remoto seguro aos roteadores/switches via SSH (e desabilitar o Telnet inseguro) foi aplicado o seguinte comando:**  
 
 <img width="517" height="128" alt="cryptokey R1" src="https://github.com/user-attachments/assets/6d5cb326-9ab7-441b-a747-9e97d0a876e3" />
+
 
 
 # DHCP
