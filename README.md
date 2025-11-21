@@ -87,11 +87,11 @@ _Em seguida, Host com endereço atribuido:_
 <img width="657" height="167" alt="DHCP-PC" src="https://github.com/user-attachments/assets/6beb565a-49f4-43ad-b646-45c176f2f149" />
 
 # DNS
-Foi configurado o DNS para tradução de nomes para as Hosts, também foi criado um test server que é o _www.test.com_:
+Foi configurado o DNS para tradução de nomes para as Hosts, e foi criado um test server que é o _www.test.com_:
 
 <img width="528" height="549" alt="DNS" src="https://github.com/user-attachments/assets/8ea4900d-dc74-4825-ab67-7cdef8d60926" />  
 
-Também foi testado a conectividade, usando o cmd _ping_ para checar a tradução de nomes:
+Foi testado a conectividade, usando o cmd _ping_ para checar a tradução de nomes:
 
 <img width="403" height="196" alt="ping-teste-dns" src="https://github.com/user-attachments/assets/03188fdf-4b47-457b-af70-8e0b31546b71" />
 
@@ -139,9 +139,9 @@ Como um adicional, também foi adicionado o password encrypt, para as senhas.
 
 Gostaria de dizer que foi demorado, mas consegui finalmente terminar meu projeto, é gratificante ver algo que você começou do 0 completo, estou aberto a sugestões! Obrigado :)
 
+Vou disponibilizar o link do projeto que está hospedado no meu Google Drive.
 
-
-
+https://drive.google.com/file/d/1ZGjBMm8IzJS762Nd6MjWxiUuQ1NtYzyO/view?usp=drive_link
 
 
 
