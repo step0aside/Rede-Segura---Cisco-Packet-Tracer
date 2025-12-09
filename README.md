@@ -142,7 +142,7 @@ Como um adicional, também foi adicionado o password encrypt, para as senhas.
 
 Gostaria de dizer que foi demorado, mas consegui finalmente terminar meu projeto, é gratificante ver algo que você começou do 0 completo, estou aberto a sugestões! Obrigado :)
 
-(pkt upado no branch).
+(pkt upado no main).
 
 
 
